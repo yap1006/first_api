@@ -1,0 +1,25 @@
+***************** leetcode 557. Reverse Words in a String III ************************
+most imp strtok is used 
+ asked in jp morgan 
+conversion to character array is done
+
+class Solution {
+public:
+    string reverseWords(string s) {
+        if (s.size() <= 1)  return s;
+        char* pch = nullptr;
+        int n = s.length();
+        char char_array[n + 1];
+        strcpy(char_array, s.c_str());
+        pch = strtok ( char_array, " ");
+        string rev = "";
+        while(pch != nullptr) {
+            string word = string((char*)pch);
+            rev += std::string(word.rbegin(), word.rend());
+            pch = strtok(nullptr, " ");
+            if (pch != nullptr) rev += " ";
+        }
+
+        return rev;
+    }
+};

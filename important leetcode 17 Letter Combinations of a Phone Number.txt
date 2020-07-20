@@ -1,0 +1,49 @@
+&&&&&&&&&&&&&&&&&&&&&&&& leetcode 17 Letter Combinations of a Phone Number &&&&&&&&&&&&&&&&&&&&&&&
+********** method1 using backtrack ******************
+class Solution {
+public:
+ vector<string> ans;
+    vector<string> letterCombinations(string digits) {
+       if(digits.empty())
+            return {};
+        string keycode[] = {".","#","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+        recur(digits,0,"",keycode);
+        return ans;
+    }
+    void recur(string s,int index,string res,string keycode[])
+    {
+        if(index==s.size())
+        {
+            ans.push_back(res);
+            return;
+        }
+        char ch=s[index];
+        for(char c:keycode[ch-'0'])
+        {
+            res+=c;
+            recur(s,index+1,res,keycode);
+            res.pop_back();
+        }
+    }
+    
+};
+
+********** method2 using iteration ******************
+
+string keycode[] = {".","#","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+
+void printKeypad(string str,string ans){
+	if(str.length()==0){
+		cout<<ans<<endl;
+		return;
+	}
+
+	char ch = str[0];
+	string ros = str.substr(1);
+
+	string key = keycode[ch - '0'];
+
+	for(int i=0;i<key.length();i++){
+		printKeypad(ros,ans + key[i]);
+	}
+}

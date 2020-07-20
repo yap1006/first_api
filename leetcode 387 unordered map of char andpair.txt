@@ -1,0 +1,20 @@
+***************** leetcode 387. First Unique Character in a String  ***********************
+use of unordered_map<char, pair<int, int>>
+
+class Solution {
+public:
+    int firstUniqChar(string s) {
+     unordered_map<char, pair<int, int>> map;
+        for(int i=0;i<s.size();i++)
+        {
+            map[s[i]].first++;
+            map[s[i]].second=i;
+        }
+        int ans = s.size();
+        for(auto m:map)
+        {
+            ans=m.second.first==1?min(ans,m.second.second):ans;
+        }
+        return ((ans == s.size()) ? -1 : ans);
+    }
+};

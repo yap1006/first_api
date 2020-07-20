@@ -1,0 +1,32 @@
++++++++++++++++++++++++++++++++++++++ leetcode 129. Sum Root to Leaf Numbers+++++++++++++++++++++++++++
+++++++++++++++++++++++++++++using print root to leaf path++++++++++++++++++++++++++++
+class Solution {
+public:
+    vector<string> v;
+    int sumNumbers(TreeNode* root) {
+     path(root," ");
+        int sum=0;
+        for(int i=0;i<v.size();i++)
+        {
+            
+            sum+=stoi(v[i]);
+        }
+        return sum;
+    }
+    void path(TreeNode* root,string p)
+    {
+        if(root==NULL)
+        {
+            return ;
+        }
+        string yy=to_string(root->val);
+        if(root->right==NULL and root->left==NULL)
+        {
+            p = p+yy;
+            v.push_back(p);
+            return;
+        }
+        path(root->left,p+yy);
+        path(root->right,p+yy);
+    }
+};

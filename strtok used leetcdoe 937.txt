@@ -1,0 +1,36 @@
+******************* 937. Reorder Data in Log Files **********************
+another use of strtok
+
+class Solution {
+public:
+    vector<string> reorderLogFiles(vector<string>& logs) {
+         std::map<string, std::set<string>> letterLogsMap;
+        vector<string> letter,digit;
+        char* ptr=NULL;
+        for (const auto& log: logs)
+        {
+            string temp=log;
+            ptr=strtok((char*)log.c_str()," ");
+            std::string idstr=std::string((const char*)ptr);
+            int numOfIdChars=idstr.size();
+            if (ptr != nullptr)     ptr = strtok(nullptr, " ");
+            if(ptr!=NULL)
+            {
+                string str=std::string((const char*)ptr);
+                std::string key(temp.begin()+numOfIdChars+1, temp.end());
+                if ((str[0] >= '0') && (str[0] <= '9')) digit.push_back(temp);
+                else letterLogsMap[key].insert(idstr);
+            }
+        }
+        for (const auto& elem : letterLogsMap)  {
+            for (const auto &id : elem.second)  {
+                letter.push_back(id + " " + elem.first);
+            }
+        }
+
+        letter.insert(letter.end(), digit.begin(), digit.end());
+
+        return letter;
+    }
+   
+};

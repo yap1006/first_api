@@ -1,0 +1,83 @@
+****************************************leetcode 671. Second Minimum Node In a Binary Tree**************************
+
+**************************************** 34/35 test case solution of level order traversal ****************
+class Solution {
+public:vector<vector<int>> val;
+    int findSecondMinimumValue(TreeNode* root) {
+        if(root&&!root->left&&!root->right)
+        {
+            return -1;
+        }
+        answer(root,0);
+        if(val[1][1]==val[1][0]&&val[1][1]==val[0][0])
+        {
+            return -1;
+        }
+         return max(val[1][1],val[1][0]);
+        
+    }
+    void answer(TreeNode* root,int level)
+    {
+        if(root==NULL)
+        {
+            return ;
+        }
+            
+        if(val.size()==level)
+        {
+            vector<int> temp;
+            val.push_back(temp);
+        }val[level].push_back(root->val);
+        answer(root->left,level+1);
+        answer(root->right,level+1);
+    }
+};
+
+**************************************** normal beginner friendly solution ****************
+
+class Solution {
+public:vector<int> val;
+    int findSecondMinimumValue(TreeNode* root) {
+        if(root&&!root->left&&!root->right)
+        {
+            return -1;
+        }
+        answer(root);
+       sort(val.begin(),val.end());
+        if(val.size()<=3)
+        {
+            if((val[0]==val[1])&&(val[0]==val[2]))
+            {
+                return -1;
+            }
+            else
+            {
+                return max(val[1],val[2]);
+            }
+        }
+        int t=val[0];
+        int b=0;
+        for(int i=1;i<val.size();i++)
+        {
+            if(val[i]>t)
+            {
+                b=val[i];
+                break;
+            }
+            b=-1;
+        }
+        return b;
+        
+        
+    }
+    void answer(TreeNode* root)
+    {
+        if(root==NULL)
+        {
+            return;
+        }
+        answer(root->left);
+        val.push_back(root->val);
+        answer(root->right);
+    }
+};

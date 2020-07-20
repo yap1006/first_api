@@ -1,0 +1,31 @@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@leetcode 22. Generate Parentheses @@@@@@@@@@@@@@@@@
+
+class Solution {
+public:
+    vector<string> generateParenthesis(int n) {
+      vector<string> c;
+        char output[100];
+     choice(0,n,0,0,c,output);
+        return c;
+    
+    }
+    void choice(int idx,int n,int open,int close,vector<string> &s,char output[])
+    {
+        if(idx==2*n)
+        {output[idx]='\0';
+            s.push_back(output);
+         return;
+        }
+        
+        if(open<n)
+        {
+            output[idx]='(';
+            choice(idx+1,n,open+1,close,s,output);
+        }
+        if(close<open)
+        {
+            output[idx]=')';
+            choice(idx+1,n,open,close+1,s,output);   
+        }
+    }
+};

@@ -1,0 +1,23 @@
+
+************************* leetcode 804. Unique Morse Code Words ************************
+***********use unordered_set for maintaning count of distinct words *****************
+
+
+
+class Solution {
+public:unordered_set<string> s;
+    vector<string> chars= {".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."};
+        
+    int uniqueMorseRepresentations(vector<string>& words) {
+     for(int i=0;i<words.size();i++)
+     {
+         string word="";
+         for(int j=0;j<words[i].size();j++)
+         {
+             word+=chars[words[i][j]-'a'];
+         }
+         s.insert(word);
+     }
+        return s.size();
+    }
+};

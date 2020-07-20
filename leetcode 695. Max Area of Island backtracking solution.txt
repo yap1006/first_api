@@ -1,0 +1,44 @@
+******************************** leetcode 695. Max Area of Island ************************
+******************************** backtracking solution ************************
+
+grid problem
+[[0,0,1,0,0,0,0,1,0,0,0,0,0],
+ [0,0,0,0,0,0,0,1,1,1,0,0,0],
+ [0,1,1,0,1,0,0,0,0,0,0,0,0],
+ [0,1,0,0,1,1,0,0,1,0,1,0,0],
+ [0,1,0,0,1,1,0,0,1,1,1,0,0],
+ [0,0,0,0,0,0,0,0,0,0,1,0,0],
+ [0,0,0,0,0,0,0,1,1,1,0,0,0],
+ [0,0,0,0,0,0,0,1,1,0,0,0,0]]
+
+class Solution {
+public:
+    int maxAreaOfIsland(vector<vector<int>>& board) {
+       if(board.size() == 0) return 0;
+
+    int n = board.size();
+    int m = board[0].size();
+        int maxsize=INT_MIN;
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+               int count=dfs(board,i,j,n,m);
+                maxsize=max(count,maxsize);
+            }
+        }
+        return maxsize;
+    }
+    int dfs(vector<vector<int>>& grid,int i,int j,int n,int m)
+    {
+        if(i>=n||j>=m||j<0||i<0||grid[i][j]==0)
+        {
+            return 0;
+        }
+        int count =0;
+        grid[i][j]=0;
+        count+=dfs(grid,i-1,j,n,m)+dfs(grid,i+1,j,n,m)+dfs(grid,i,j-1,n,m)+dfs(grid,i,j+1,n,m);
+        return count+1;
+
+    }
+};

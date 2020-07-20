@@ -1,0 +1,61 @@
+**************************************** leetcode populating next pointer************************
+class Solution {
+public:
+    Node* connect(Node* root) {
+        if(root==NULL)
+        {
+            return NULL;
+        }
+        dfs(root,NULL);
+        return root;
+    }
+   void dfs(Node* root,Node* parent)
+   {
+       if(parent==NULL)
+       {root->next=NULL;
+           //return ;
+       }
+       else if(parent->left==root)
+       {
+           root->next=parent->right;
+       }
+       else if(parent->right==root)
+       {
+           root->next=parent->next?parent->next->left:NULL;
+       }
+       if(root->left)
+       {
+           dfs(root->left,root);
+           dfs(root->right,root);
+       }
+       
+   }
+};
+
+********************************level order method**********************8
+
+
+
+
+
+
+
+class Solution {
+    void build(vector<TreeLinkNode *> &BLDG,TreeLinkNode *root,int level){
+        if(!root) return;
+        if(level>=BLDG.size()) BLDG.push_back(root);
+        else{
+            BLDG[level]->next = root;
+            BLDG[level] = root;
+        }
+        build(BLDG,root->left,level+1);
+        build(BLDG,root->right,level+1);
+        return;
+    }
+public:
+    void connect(TreeLinkNode *root) {
+        vector<TreeLinkNode*> tmp;
+        build(tmp,root,0);
+        return;
+    }
+};

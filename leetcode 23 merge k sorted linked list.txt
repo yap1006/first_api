@@ -1,0 +1,68 @@
+********************** leetcode 23 merge k sorted linked list **********************
+simple method
+class Solution {
+public:
+    ListNode* mergeKLists(vector<ListNode*>& list) {
+        //ListNode* temp;
+        vector<int> res;
+        for(int i=0;i<list.size();i++)
+        {
+         while(list[i]!=NULL)
+         {
+             res.push_back(list[i]->val);
+             list[i]=list[i]->next;
+         }
+        }
+        sort(res.begin(),res.end());
+         ListNode* root=new  ListNode(0);
+         ListNode* ans=root;
+        for(int i=0;i<res.size();i++)
+        {
+            ans->next=new ListNode(res[i]);
+            ans=ans->next;
+        }
+        return root->next;
+    }
+}; 
+
+
+********************************* heap method // to implemnt for linked list
+
+vector<int> merge(){
+
+	priority_queue<ArrayPointer,vector<ArrayPointer>,ArrayCompare > pq;
+
+	vector<int> res;
+
+	vector< vector<int> > matrix ({{1,4,7,10},
+								{2,5,8},
+								{3,6,9,12}});
+
+
+	for(int i=0;i<3;i++){
+		ArrayPointer a(matrix[i][0],0,i);
+		pq.push(a);
+	}
+
+	while(pq.top().value!=INT_MAX){
+		ArrayPointer smallest = pq.top();
+		pq.pop();
+
+		res.push_back(smallest.value);
+
+		smallest.idx +=1;
+
+		int row = smallest.arrayNumber;
+
+		if(smallest.idx ==matrix[row].size()){
+			smallest.value = INT_MAX;
+			pq.push(smallest);
+			continue;
+		}
+
+		smallest.value = matrix[row][smallest.idx];
+		pq.push(smallest);
+	}
+
+	return res;
+}

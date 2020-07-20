@@ -1,0 +1,38 @@
+****************** leetcode 109  Convert Sorted List to Binary Search Tree linked method*********************
+class Solution {
+public:vector<int> v;
+    TreeNode* sortedListToBST(ListNode* head) {
+        return con1(head,NULL);
+    }
+    TreeNode* con1(ListNode* head,ListNode* tail)
+    {
+        if(head==tail)
+        {
+            return NULL;
+        }
+        if(head->next==tail)
+        {
+           return new TreeNode(head->val);
+        }
+        ListNode* centre=find(head,tail);
+        TreeNode* temp=new TreeNode(centre->val);
+        temp->left=con1(head,centre);
+        temp->right=con1(centre->next,tail);
+        return temp;
+    }
+    ListNode* find(ListNode* head,ListNode* tail)
+    {
+        if(head==tail || head->next==tail) return head;
+        ListNode* slow=head;
+        ListNode* fast=head->next->next;
+        while(fast!=tail)
+        {
+            slow=slow->next;
+            fast=fast->next;
+            if(fast!=tail)
+            {
+            fast=fast->next;}
+        }
+        return slow;
+    }
+};

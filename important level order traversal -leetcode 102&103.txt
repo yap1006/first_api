@@ -1,0 +1,127 @@
+********************** leetcode level order solution *********************
+********* 1. general recursion methos=d **************************
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:vector<vector<int>> res;
+    vector<vector<int>> levelOrder(TreeNode* root) {
+    print(root,0);
+        return res;
+    }
+    void print(TreeNode* root,int level)
+    {
+        if(root==NULL)
+        {
+            return ;
+        }
+        if(res.size()==level)
+        {
+            vector<int> vala;    // stroing new null vector if we ran out of order
+            res.push_back(vala);
+        }
+res[level].push_back(root->val);
+        print(root->left,level+1);
+        print(root->right,level+1);
+        
+    }
+};
+
+
+*********************  2. using queue ****************************
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    vector<vector<int>> levelOrder(TreeNode* root) {
+   vector<vector<int>> res;
+        if(root==NULL)
+        {
+            return res;
+        }
+        queue<TreeNode*>q;
+q.push(root);
+while(!q.empty())
+{
+    int n=q.size();
+        vector<int> temp;
+    while(n)
+    {
+        TreeNode* node=q.front();
+temp.push_back(node->val);
+        q.pop();
+            if(node->left)
+            {
+                q.push(node->left);
+            }
+        if(node->right)
+        {
+            q.push(node->right);
+        }
+        n--;
+    }
+    res.push_back(temp);
+}return res;
+    }
+   
+};
+
+
+********************** leetcode level order zigzag solution 103*********************
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:vector<vector<int>> res;
+    vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+        print(root,0);
+        int n = res.size();
+        for(int i=0;i<n;i++)
+        {if(i%2!=0)
+        {
+            reverse(res[i].begin(),res[i].end());
+        }
+        }
+        return res;
+    }
+    void print(TreeNode* root,int level)
+    {
+        if(root==NULL)
+        {
+            return ;
+        }
+        if(res.size()==level)
+        {vector<int> vala;
+            res.push_back(vala);
+        }
+        res[level].push_back(root->val);
+        print(root->left,level+1);
+        print(root->right,level+1);
+    }
+};
